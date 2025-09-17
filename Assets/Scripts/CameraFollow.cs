@@ -7,7 +7,7 @@ public class CameraFollow : MonoBehaviour
 
     void LateUpdate()
     {
-        // Try to find Pokki dynamically if not yet assigned
+        // trying to find Pokki dynamically if not yet assigned
         if (target == null)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -17,7 +17,7 @@ public class CameraFollow : MonoBehaviour
             }
         }
 
-        // Follow logic
+        // the follow logic
         if (target != null)
         {
             Vector3 targetPosition = new Vector3(target.position.x, target.position.y, -10f);

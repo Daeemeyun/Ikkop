@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+// this whole script is for currency expansion in future update
 public class CurrencyManager : MonoBehaviour
 {
     public static CurrencyManager Instance;

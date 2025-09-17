@@ -6,8 +6,8 @@ public class BossEnemy : MonoBehaviour
     public int maxHealth = 3;
     private int currentHealth;
 
-    public GameObject exitPortalPrefab; // Assign this in Inspector
-    public GameObject healthBarCanvas; // Child canvas with slider
+    public GameObject exitPortalPrefab;
+    public GameObject healthBarCanvas; // future expansion to include health bar onto boss enemies (quality of life)
     private Slider healthBar;
 
     private bool isDead = false;

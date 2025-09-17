@@ -17,7 +17,7 @@ public class PlayerExit : MonoBehaviour
         {
             Debug.Log("Loading dungeon...");
             sfxPlayer.PlayDoor();
-            SceneManager.LoadScene("stage1"); //to be changed to dungeon scene name
+            SceneManager.LoadScene("stage1");
         }
     }
 
@@ -27,7 +27,7 @@ public class PlayerExit : MonoBehaviour
         {
             isNearExit = true;
 
-            //floating text for ExitDoor
+            // floating text for ExitDoor
             advanceText = other.GetComponentInChildren<TextMeshProUGUI>();
             if (advanceText != null)
                 advanceText.text = "Press E to advance";

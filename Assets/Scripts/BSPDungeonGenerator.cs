@@ -36,15 +36,14 @@ public class BSPDungeonGenerator : MonoBehaviour
         {
             Room room = rooms[i];
 
-            // Apply tileSize scaling to world position
+            // applying the tileSize scaling to world position
             // Vector3 worldPos = new Vector3(room.x * tileSize, room.y * tileSize, 0);
             float roomCenterX = (room.x + room.width / 2f) * tileSize;
             float roomCenterY = (room.y + room.height / 2f) * tileSize;
             Vector3 worldPos = new Vector3(roomCenterX, roomCenterY, 0);
             Vector3 centerWorldPos = new Vector3((room.x + room.width / 2f) * tileSize, (room.y + room.height / 2f) * tileSize, 0);
 
-            // Instantiate room
-            // GameObject roomGO = Instantiate(roomPrefab, worldPos, Quaternion.identity);
+            // instantiating room code
             for (int x = 0; x < room.width; x++)
             {
                 for (int y = 0; y < room.height; y++)
@@ -54,7 +53,7 @@ public class BSPDungeonGenerator : MonoBehaviour
                 }
             }
 
-            // adding wall boundaries
+            // adding wall boundaries (prevents player from walking into the abyss)
             float xMin = room.x;
             float xMax = room.x + room.width;
             float yMin = room.y;
@@ -67,16 +66,13 @@ public class BSPDungeonGenerator : MonoBehaviour
                 GameObject pokki = Instantiate(playerPrefab, new Vector3(pokkiCenterX, pokkiCenterY, -0.1f), Quaternion.identity);
                 pokki.tag = "Player";
 
-                //attaching the faint screen to the player
+                // attaching the faint screen to the player
                 PlayerHealth health = pokki.GetComponent<PlayerHealth>();
-                health.faintScreen = GameObject.Find("FaintScreen"); // Replace with your actual panel's name
+                health.faintScreen = GameObject.Find("FaintScreen");
             }
-            // Replace the problematic section in your GenerateDungeon() method
-            // Starting from around line 50 where you handle non-first rooms
-
             else
             {
-                // Find the wall tile where a corridor touches this room
+                // locating the wall tile where a corridor touches the room
                 Vector2Int? entryPoint = null;
 
                 for (int x = room.x - 1; x <= room.x + room.width; x++)
@@ -95,10 +91,10 @@ public class BSPDungeonGenerator : MonoBehaviour
                     if (entryPoint.HasValue) break;
                 }
 
-                // Check if this is the last room (boss room)
+                // logic check to see if this is the last room a.k.a the boss room
                 if (i == rooms.Count - 1)
                 {
-                    // Spawn boss in the center of the last room
+                    // spawning boss in the center of the boss room
                     Vector3 roomCenter = new Vector3(
                         (room.x + room.width / 2f) * tileSize,
                         (room.y + room.height / 2f) * tileSize,
@@ -117,7 +113,7 @@ public class BSPDungeonGenerator : MonoBehaviour
                 }
                 else
                 {
-                    // Regular enemy spawning for non-boss rooms
+                    // normal enemy spawning logic for non-boss rooms
                     int enemyCount = Random.Range(2, 4);
 
                     for (int e = 0; e < enemyCount; e++)
@@ -129,7 +125,7 @@ public class BSPDungeonGenerator : MonoBehaviour
                     }
                 }
 
-                // Pot spawn code (for all non-first rooms)
+                // destroyable pot spawn code (as long as not the first room which is the spawn room)
                 int potCount = Random.Range(1, 3);
 
                 for (int p = 0; p < potCount; p++)
@@ -142,17 +138,16 @@ public class BSPDungeonGenerator : MonoBehaviour
             }
         }
 
-        // Connect rooms using BSP logic
+        // connecting rooms using BSP logic
         root.ConnectRooms(this);
 
-        // Logic to help navigate T-Junction Invisible Walls
+        // function to help navigate any inviisble walls at T junctions
         SpawnWallsBesideCorridors();
 
-        // Pre-place exit portal (to be enabled later)
         Vector3 exitPos = new Vector3(rooms[rooms.Count - 1].CenterX * tileSize, rooms[rooms.Count - 1].CenterY * tileSize - tileSize, 0);
-        // Instantiate(exitPortalPrefab, exitPos, Quaternion.identity);
+        // Instantiate(exitPortalPrefab, exitPos, Quaternion.identity); < used to use this code to place a permanent portal on the last room, can use for debugging
 
-        // Place walls around all room bounds unless they are corridor points
+        // placing walls around all room boundaries with the exception of where the corridors are
         foreach (Room room in rooms)
         {
             for (int x = room.x - 1; x <= room.x + room.width; x++)
@@ -179,41 +174,33 @@ public class BSPDungeonGenerator : MonoBehaviour
 
         if (horizontalFirst)
         {
-            // Horizontal segment
+            // for the horizontal
             while (Mathf.RoundToInt(current.x) != Mathf.RoundToInt(to.x))
             {
                 current.x += Mathf.Sign(to.x - current.x);
                 Vector2Int gridPos = new Vector2Int(Mathf.RoundToInt(current.x), Mathf.RoundToInt(current.y));
                 corridorPoints.Add(gridPos);
 
-                // Rotation: 90 degrees for horizontal
+                // rotating it 90 degrees
                 Quaternion rotation = Quaternion.Euler(0, 0, 90);
                 Instantiate(corridorPrefab, new Vector3(gridPos.x * tileSize, gridPos.y * tileSize, 0.1f), rotation);
-
-                // Spawn invisible walls above and below
-                // SpawnInvisibleWall(gridPos + Vector2Int.up);
-                // SpawnInvisibleWall(gridPos + Vector2Int.down);
             }
 
-            // Vertical segment
+            // for the vertical
             while (Mathf.RoundToInt(current.y) != Mathf.RoundToInt(to.y))
             {
                 current.y += Mathf.Sign(to.y - current.y);
                 Vector2Int gridPos = new Vector2Int(Mathf.RoundToInt(current.x), Mathf.RoundToInt(current.y));
                 corridorPoints.Add(gridPos);
 
-                // No rotation for vertical
+                // no need to rotate as default position is vertical already
                 Quaternion rotation = Quaternion.identity;
                 Instantiate(corridorPrefab, new Vector3(gridPos.x * tileSize, gridPos.y * tileSize, 0.1f), rotation);
-
-                // Spawn invisible walls to the left and right
-                // SpawnInvisibleWall(gridPos + Vector2Int.left);
-                // SpawnInvisibleWall(gridPos + Vector2Int.right);
             }
         }
         else
         {
-            // Vertical segment
+            // for vertical
             while (Mathf.RoundToInt(current.y) != Mathf.RoundToInt(to.y))
             {
                 current.y += Mathf.Sign(to.y - current.y);
@@ -222,13 +209,9 @@ public class BSPDungeonGenerator : MonoBehaviour
 
                 Quaternion rotation = Quaternion.identity;
                 Instantiate(corridorPrefab, new Vector3(gridPos.x * tileSize, gridPos.y * tileSize, 0.1f), rotation);
-
-                // Spawn invisible walls to the left and right
-                // SpawnInvisibleWall(gridPos + Vector2Int.left);
-                // SpawnInvisibleWall(gridPos + Vector2Int.right);
             }
 
-            // Horizontal segment
+            // for horizontal
             while (Mathf.RoundToInt(current.x) != Mathf.RoundToInt(to.x))
             {
                 current.x += Mathf.Sign(to.x - current.x);
@@ -237,21 +220,17 @@ public class BSPDungeonGenerator : MonoBehaviour
 
                 Quaternion rotation = Quaternion.Euler(0, 0, 90);
                 Instantiate(corridorPrefab, new Vector3(gridPos.x * tileSize, gridPos.y * tileSize, 0.1f), rotation);
-
-                // Spawn invisible walls above and below
-                // SpawnInvisibleWall(gridPos + Vector2Int.up);
-                // SpawnInvisibleWall(gridPos + Vector2Int.down);
             }
         }
     }
 
-    // Function for spawning invisible walls
+    // defining the function for spawning invisible walls
     private void SpawnInvisibleWall(Vector2Int gridPos)
     {
-        // Avoid spawning walls if it's already a corridor or has a corridor tile
+        // if already a corridor or has a corridor tile, dont spawn the invisible wall
         if (corridorPoints.Contains(gridPos)) return;
 
-        // Raycast to check if there's already a corridor tile
+        // checking if there is already corridor
         Vector3 worldPos = new Vector3(gridPos.x * tileSize, gridPos.y * tileSize, 0.1f);
         Collider2D hit = Physics2D.OverlapPoint(worldPos);
         if (hit != null && hit.CompareTag("Corridor")) return;
@@ -264,10 +243,10 @@ public class BSPDungeonGenerator : MonoBehaviour
     {
         Vector2Int[] directions = new Vector2Int[]
         {
-            new Vector2Int(1, 0),   // Right
-            new Vector2Int(-1, 0),  // Left
-            new Vector2Int(0, 1),   // Up
-            new Vector2Int(0, -1),  // Down
+            new Vector2Int(1, 0),   // right
+            new Vector2Int(-1, 0),  // left
+            new Vector2Int(0, 1),   // up
+            new Vector2Int(0, -1),  // down
         };
 
         foreach (Vector2Int point in corridorPoints)
@@ -276,11 +255,10 @@ public class BSPDungeonGenerator : MonoBehaviour
             {
                 Vector2Int neighbor = point + dir;
 
-                // Skip if already corridor or inside a room
                 if (corridorPoints.Contains(neighbor) || IsPointInsideAnyRoom(neighbor))
                     continue;
 
-                // Instantiate invisible wall
+                // instantiate invisible wall
                 Vector3 wallPos = new Vector3(neighbor.x * tileSize, neighbor.y * tileSize, 0);
                 GameObject wall = Instantiate(invisibleWallPrefab, wallPos, Quaternion.identity);
 
@@ -307,9 +285,7 @@ public class BSPDungeonGenerator : MonoBehaviour
         return false;
     }
 
-
-
-    // ---------------- Room and BSP Node Classes ----------------
+// ROOM + NODE CLASS FROM HERE ONWARDS
 
     class Room
     {

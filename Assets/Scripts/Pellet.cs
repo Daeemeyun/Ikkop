@@ -20,17 +20,17 @@ public class Pellet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Check for normal enemies
+        // checking for normal enemies
         if (other.CompareTag("Enemy"))
         {
             Enemy enemy = other.GetComponent<Enemy>();
             if (enemy != null)
             {
-                enemy.TakeDamage(1); // damage = 1
+                enemy.TakeDamage(1); // damage = 1, can change
             }
             Destroy(gameObject); // destroy pellet
         }
-        // Check for boss
+        // checking for boss enemy
         else if (other.CompareTag("Boss"))
         {
             BossEnemy boss = other.GetComponent<BossEnemy>();
@@ -40,13 +40,13 @@ public class Pellet : MonoBehaviour
             }
             Destroy(gameObject);
         }
-        // Breakables
+        // for destroyables/pots
         else if (other.CompareTag("Breakable"))
         {
             Destroy(other.gameObject);
             Destroy(gameObject);
         }
-        // Walls
+        // for walls
         else if (other.CompareTag("Wall"))
         {
             Destroy(gameObject);

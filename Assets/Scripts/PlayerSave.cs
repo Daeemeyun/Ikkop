@@ -18,7 +18,7 @@ public class PlayerSave : MonoBehaviour
             sfxPlayer.PlaySave();
             ShowSaveMessage("Game Saved!");
 
-            //hide message after 2 seconds
+            // hide the message after 2 seconds
             Invoke("ClearMessage", 2f);
         }
     }
@@ -29,7 +29,7 @@ public class PlayerSave : MonoBehaviour
         {
             isNearSavePoint = true;
             
-            //auto-locates the floating SaveText inside DogBed
+            // auto-locates the floating SaveText inside the save portal (want to make it a dog bed in the future)
             saveText = other.GetComponentInChildren<TextMeshProUGUI>();
 
             if (saveText != null)

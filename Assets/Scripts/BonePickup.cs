@@ -9,12 +9,12 @@ public class BonePickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // work on this function when possible - currencyManager
+            // possible expansion idea of bones as currency in the future
             if (CurrencyManager.Instance != null)
             {
                 CurrencyManager.Instance.AddBones(amount);
 
-                //pickup sound
+                // pickup sound
                 if (pickupSound != null)
                 {
                     AudioSource.PlayClipAtPoint(pickupSound, transform.position);

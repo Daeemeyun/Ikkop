@@ -1,5 +1,3 @@
-// Add this to your ExitPortal.cs script or create a GameManager script
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,12 +23,12 @@ public class ExitPortal : MonoBehaviour
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.E))
         {
-            // Reset powerups when returning to hub (completing the run)
+            // when run is finished/returning to cabin, resets the powerups
             if (returnSceneName == "CabinHub")
             {
                 PowerupMenuManager.ResetPowerups();
                 
-                // Also reset player powerups if player exists
+                // logic to also reset player powerups if player exists
                 GameObject player = GameObject.FindGameObjectWithTag("Player");
                 if (player != null)
                 {

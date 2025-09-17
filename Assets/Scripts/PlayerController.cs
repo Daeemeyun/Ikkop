@@ -4,25 +4,21 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Movement")]
     public float moveSpeed = 5f;
     private float baseSpeed;
 
-    [Header("Shooting")]
     public GameObject pelletPrefab;
     public Transform firePoint;
     public float shootCooldown = 0.3f;
     private float lastShootTime = 0f;
     public AudioClip shootSFX;
 
-    [Header("Sprites")]
     public Sprite frontSprite;
     public Sprite upSprite;
     public Sprite downSprite;
     public Sprite leftSprite;
     public Sprite rightSprite;
 
-    [Header("Powerups")]
     private bool doubleShotEnabled = false;
     
     private Rigidbody2D rb;
@@ -38,7 +34,7 @@ public class PlayerController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         
         spriteRenderer.sprite = frontSprite;
-        baseSpeed = moveSpeed; // Store original speed
+        baseSpeed = moveSpeed; // storing the original speed
     }
 
     void Update()
@@ -49,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
-        // Movement input
+        // to handle the movemetn input
         moveInput.x = 0;
         moveInput.y = 0;
 
@@ -58,7 +54,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.W)) moveInput.y = 1;
         if (Input.GetKey(KeyCode.S)) moveInput.y = -1;
 
-        // Sprite flipping
+        // flips sprite based on movement so its more intuitive/aesthetic
         if (Input.GetKey(KeyCode.D))
         {
             spriteRenderer.flipX = false;
@@ -95,25 +91,25 @@ public class PlayerController : MonoBehaviour
 
     void Shoot(Vector2 dir)
     {
-        // Primary shot
+        // the first primary shot
         CreatePellet(transform.position, dir);
         
-        // Double shot (if enabled)
+        // if double shot is chosen
         if (doubleShotEnabled)
         {
             Vector3 offset = Vector3.zero;
             
-            // Create offset perpendicular to shooting direction
+            // creates an offset perpendicular to shooting direction
             if (dir == Vector2.up || dir == Vector2.down)
             {
-                offset = new Vector3(0.5f, 0, 0); // Horizontal offset for vertical shots
+                offset = new Vector3(0.5f, 0, 0); // horizontal offset for vertical shots
             }
             else
             {
-                offset = new Vector3(0, 0.5f, 0); // Vertical offset for horizontal shots
+                offset = new Vector3(0, 0.5f, 0); // vertical offset for horizontal shots
             }
             
-            // Create second pellet with offset
+            // then creates the second pellet with offset
             CreatePellet(transform.position + offset, dir);
         }
         
@@ -168,7 +164,7 @@ public class PlayerController : MonoBehaviour
         spriteRenderer.sprite = frontSprite;
     }
 
-    // Powerup Methods
+    // the different powerup choices/methods
     public void EnableDoubleShot()
     {
         doubleShotEnabled = true;
@@ -187,12 +183,12 @@ public class PlayerController : MonoBehaviour
         if (healthComponent != null)
         {
             healthComponent.maxHealth += amount;
-            healthComponent.Heal(amount); // Also heal current health
+            healthComponent.Heal(amount); // this also heals current health
             Debug.Log($"Max health increased by {amount}!");
         }
     }
 
-    // Reset powerups (called when starting new run)
+    // resetting the powerups, also called when starting a new run and returning to cabin
     public void ResetPowerups()
     {
         doubleShotEnabled = false;

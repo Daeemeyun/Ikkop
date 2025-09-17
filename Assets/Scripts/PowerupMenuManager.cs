@@ -27,7 +27,7 @@ public class PowerupMenuManager : MonoBehaviour
 
     private void Start()
     {
-        // Find player - either pre-spawned or wait for dungeon generation
+        // logic to find player either pre-spawned or after the dungeon generation script
         StartCoroutine(FindPlayerAfterDelay());
         
         if (ShouldShowPowerupMenu())
@@ -38,7 +38,7 @@ public class PowerupMenuManager : MonoBehaviour
 
     private System.Collections.IEnumerator FindPlayerAfterDelay()
     {
-        // Wait a frame to let dungeon generator spawn the player
+        // waits for a frame to let dungeon generator spawn the player
         yield return null;
         
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -46,7 +46,7 @@ public class PowerupMenuManager : MonoBehaviour
         {
             playerController = player.GetComponent<PlayerController>();
             
-            // Apply already chosen powerups to the newly spawned player
+            // applies already chosen powerups to the newly spawned player
             ApplyChosenPowerups();
         }
     }
@@ -55,7 +55,7 @@ public class PowerupMenuManager : MonoBehaviour
     {
         string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
         
-        // Show menu at start of each stage if there are powerups left to choose
+        // shows the menu at start of each stage if there are powerups left to choose (rest will be red button, unavailable to be clicked)
         return (sceneName == "stage1" || sceneName == "stage2" || sceneName == "stage3") 
                && chosenPowerups.Count < 3;
     }
@@ -65,7 +65,7 @@ public class PowerupMenuManager : MonoBehaviour
         Time.timeScale = 0f;
         powerupMenuUI.SetActive(true);
         
-        // Update button states
+        // updates the button states
         UpdateButtonStates();
     }
 
@@ -160,14 +160,14 @@ public class PowerupMenuManager : MonoBehaviour
         }
     }
 
-    // Call this when returning to CabinHub to reset for new run
+    // this is called when player is returning to cabin to reset for new run
     public static void ResetPowerups()
     {
         chosenPowerups.Clear();
         Debug.Log("Powerups reset for new run");
     }
 
-    // Optional: Method to check if player has specific powerup
+    // checking if player has specific powerup
     public static bool HasPowerup(PowerupType powerupType)
     {
         return chosenPowerups.Contains(powerupType);

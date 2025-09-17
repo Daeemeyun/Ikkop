@@ -47,8 +47,8 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Pellet"))
         {
-            TakeDamage(1); // You can customize damage
-            Destroy(other.gameObject); // Destroy the pellet
+            TakeDamage(1); // change this to change damage
+            Destroy(other.gameObject); // logic to destroy the pellet projectile
         }
         else if (other.CompareTag("Player"))
         {

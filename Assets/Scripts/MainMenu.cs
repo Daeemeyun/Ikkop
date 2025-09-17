@@ -5,7 +5,7 @@ using TMPro;
 
 public class MainMenu : MonoBehaviour
 {
-    public TextMeshProUGUI[] menuItems; //assign the start, options, quit in inspector
+    public TextMeshProUGUI[] menuItems;
     public GameObject menuPanel;
     public GameObject optionsPanel;
     public TextMeshProUGUI backText;
@@ -55,10 +55,10 @@ public class MainMenu : MonoBehaviour
                 else if (Input.GetKeyDown(KeyCode.Space))
                 {
                     sfxPlayer.PlayClick();
-                    if (optionsIndex == 2) //backtext
+                    if (optionsIndex == 2)
                         CloseOptions();
                     else
-                        adjustingSlider = true; //enters slider adjustment mode
+                        adjustingSlider = true; // entering the slider adjustment mode
                 }
             }
             else
@@ -72,7 +72,7 @@ public class MainMenu : MonoBehaviour
                 else if (Input.GetKeyDown(KeyCode.Space))
                 {
                     sfxPlayer.PlayClick();
-                    adjustingSlider = false; //exits slider adjustment mode
+                    adjustingSlider = false; // exiting the slider adjustment mode
                 }
             }
 
@@ -106,10 +106,10 @@ public class MainMenu : MonoBehaviour
         {
             bool isSelected = (i == selectedIndex);
 
-            //color transition
+            // color transition
             menuItems[i].color = isSelected ? Color.yellow : Color.white;
 
-            //smooth font size transition
+            // smooth font size transition
             float targetSize = isSelected ? selectedFontSize : normalFontSize;
             float currentSize = menuItems[i].fontSize;
             menuItems[i].fontSize = Mathf.MoveTowards(currentSize, targetSize, fontLerpSpeed * Time.deltaTime);
@@ -122,10 +122,10 @@ public class MainMenu : MonoBehaviour
         {
             bool isSelected = (i == optionsIndex);
 
-            //highlighting selected label
+            // highlighting the selected label
             optionsItems[i].color = isSelected ? Color.yellow : Color.white;
 
-            //smooth font size change (same as main menu)
+            // smooth font size change (same as main menu)
             float targetSize = isSelected ? selectedFontSize : normalFontSize;
             float currentSize = optionsItems[i].fontSize;
             optionsItems[i].fontSize = Mathf.MoveTowards(currentSize, targetSize, fontLerpSpeed * Time.deltaTime);
@@ -170,7 +170,7 @@ public class MainMenu : MonoBehaviour
 
     void AdjustSlider(float change)
     {
-        if (optionsIndex == 0) //music
+        if (optionsIndex == 0) // music
         {
             musicSlider.value = Mathf.Clamp(musicSlider.value + change, 0f, 1f);
             int percentage = Mathf.RoundToInt(musicSlider.value * 100f);
@@ -178,7 +178,7 @@ public class MainMenu : MonoBehaviour
 
             PlayerPrefs.SetFloat("MusicVolume", musicSlider.value);
         }
-        else if (optionsIndex == 1) //sfx
+        else if (optionsIndex == 1) // sound effects/sfx
         {
             sfxSlider.value = Mathf.Clamp(sfxSlider.value + change, 0f, 1f);
             int percentage = Mathf.RoundToInt(sfxSlider.value * 100f);
