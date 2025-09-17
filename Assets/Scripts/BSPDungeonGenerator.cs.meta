@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 837286ec318fa4f0dadfcd5c61353cf1
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - roomPrefab: {instanceID: 0}
+  - playerPrefab: {instanceID: 0}
+  - portalPrefab: {instanceID: 0}
+  - bossPortalPrefab: {instanceID: 0}
+  - exitPortalPrefab: {instanceID: 0}
+  - enemyPrefab: {instanceID: 0}
+  - corridorPrefab: {instanceID: 0}
+  - wallPrefab: {instanceID: 0}
+  - potPrefab: {instanceID: 0}
+  - invisibleWallPrefab: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

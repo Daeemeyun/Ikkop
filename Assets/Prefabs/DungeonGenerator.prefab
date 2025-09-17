@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5091381034822445079
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3723657884618407546}
+  - component: {fileID: 156771056198448691}
+  m_Layer: 0
+  m_Name: DungeonGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3723657884618407546
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5091381034822445079}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.8099976, y: -3.7399979, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &156771056198448691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5091381034822445079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 837286ec318fa4f0dadfcd5c61353cf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileSize: 1
+  width: 60
+  height: 60
+  maxDepth: 4
+  roomMinSize: 6
+  roomPrefab: {fileID: 9074818436270802299, guid: 84bf3c88eb7284c79b354884db6c8369, type: 3}
+  playerPrefab: {fileID: 8058639811679614648, guid: 76580267e11724e1ca14fbeedfc92855, type: 3}
+  portalPrefab: {fileID: 1595458705109550911, guid: ba909015f1a2f4168bfdd94946e1b05b, type: 3}
+  bossPortalPrefab: {fileID: 7974270007276436982, guid: d75c7f95deef84a3cb1323d02d10ada6, type: 3}
+  exitPortalPrefab: {fileID: 1537854509976892593, guid: bb2eea5b193b54c93884621802918a2a, type: 3}
+  enemyPrefab: {fileID: 6232621392135283506, guid: 27c701eae749a44a090380e196e6d434, type: 3}
+  corridorPrefab: {fileID: 1234770909663916480, guid: 3fd46e68c06034c7494f957d98bd62a2, type: 3}
+  wallPrefab: {fileID: 419927768311309784, guid: 57faaa948fb464e1aaff73ee4dfe4235, type: 3}
+  potPrefab: {fileID: 6520445362352707720, guid: 3df772a43877d44d787be6bc1db773bd, type: 3}
+  invisibleWallPrefab: {fileID: 638197453002202133, guid: 6e2d1afc8be13493f888a6f95337e163, type: 3}
+  bossPrefab: {fileID: 6232621392135283506, guid: b10e528e100cd4230b57d14f4b1bf58f, type: 3}
